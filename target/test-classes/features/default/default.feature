@@ -30,9 +30,13 @@ Feature: Default main Feature
   #Background:
   #  Given BackGround Conditions
 
-  Scenario: Main Default Scenario
-    Given The user is in "Google Search" view.
+  Scenario Outline: Main Default Scenario
+    Given The user is in "<view>" view
     #When Some more here
     #Then Some more here
     #When Some more here
     #And Some more here
+
+    Examples:
+      | view          |
+      | Google Search |

@@ -8,12 +8,12 @@ public class GeneralSteps extends PageObject {
         super();
     }
 
-    @Given("The user is in {string} view.")
+    @Given("The user is in {string} view")
     public void the_user_is_in_view(String view) {
         try {
             if (view.equals("Google Search")) {
                 openURL();
             }
-        } catch (Exception e) { }
+        } catch (Exception e) { print(e.getMessage()); }
     }
 }

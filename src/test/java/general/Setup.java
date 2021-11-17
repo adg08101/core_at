@@ -6,8 +6,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
-
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,58 +14,104 @@ import java.util.Properties;
 public final class Setup {
     private static WebDriver driver;
     private static HashMap<String, Object> store;
-    private static Actions actions;
+    private static ChromeOptions options;
+    private static ConfigProperties configProperties;
     private static WaitingObject waitingObject;
-    private static String defaultURL;
     private static JavascriptExecutor jsExecutor;
-    public static Map<String, Object> timeouts;
+    private static Map<String, Object> timeouts;
+    private static InputStream input;
+    private static Properties properties;
+
+    public static void setStore(HashMap<String, Object> store) {
+        Setup.store = store;
+    }
+
+    public static InputStream getInput() {
+        return input;
+    }
+
+    public static void setInput(InputStream input) {
+        Setup.input = input;
+    }
+
+    public static Properties getProperties() {
+        return properties;
+    }
+
+    public static void setProperties(Properties properties) {
+        Setup.properties = properties;
+    }
 
     @Before
     public void InitSetup() {
-        System.setProperty("webdriver.chrome.driver", System.getenv("CHROME_DRIVER"));
-        System.setProperty("webdriver.chrome.silentOutput", "true");
-        ChromeOptions options = new ChromeOptions();
-        timeouts = new HashMap<String, Object>();
-        timeouts.put("implicit", 50);
-        timeouts.put("pageLoad", 5000000);
-        timeouts.put("script", 300000);
-        options.setCapability("timeouts", timeouts);
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-        initObject();
+        try {
+            setConfigProperties(new ConfigProperties());
+            System.setProperty((String) getConfigProperties().getProperties().get(Property.WEBDRIVER_CHROME_DRIVER),
+                    System.getenv((String) getConfigProperties().getProperties().get(Property.CHROME_DRIVER)));
+            System.setProperty((String) getConfigProperties().getProperties().get(Property.
+                    WEBDRIVER_CHROME_SILENTOUTPUT), (String) getConfigProperties().getProperties().
+                    get(Property.STRING_TRUE));
+            setOptions(new ChromeOptions());
+            setTimeouts(new HashMap<>());
+            getTimeouts().put((String) getConfigProperties().getProperties().get(Property.TIMEOUT_IMPLICIT_KEY),
+                    getConfigProperties().getProperties().get(Property.TIMEOUT_IMPLICIT_VALUE));
+            getTimeouts().put((String) getConfigProperties().getProperties().get(Property.TIMEOUT_PAGELOAD_KEY),
+                    getConfigProperties().getProperties().get(Property.TIMEOUT_PAGELOAD_VALUE));
+            getTimeouts().put((String) getConfigProperties().getProperties().get(Property.TIMEOUT_SCRIPT_KEY),
+                    getConfigProperties().getProperties().get(Property.TIMEOUT_SCRIPT_VALUE));
+            getOptions().setCapability((String) getConfigProperties().getProperties().get(Property.STRING_TIMEOUTS),
+                    getTimeouts());
+            setDriver(new ChromeDriver(getOptions()));
+            getDriver().manage().window().maximize();
+            initObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void initObject() {
-        waitingObject = new WaitingObject(driver);
-        actions = new Actions(driver);
-        store = new HashMap<String, Object>();
-        setJsExecutor((JavascriptExecutor) driver);
+    private void initObject() {
+        waitingObject = new WaitingObject(getDriver());
+        setStore(new HashMap<>());
+        setJsExecutor((JavascriptExecutor) getDriver());
         loadDefaultProperties();
+    }
+
+    private void loadDefaultProperties() {
+        setInput(Setup.class.getResourceAsStream((String) getConfigProperties().
+                getProperties().get(Property.DEFAULT_PROPERTIES_FILE_PATH)));
+
+        setProperties(new Properties());
+
+        try {
+            getProperties().load(getInput());
+        } catch (java.io.IOException ignored) { }
+
+        setKeyValueStore((String) getConfigProperties().getProperties().get(
+                Property.STRING_DEFAULT_PROPERTIES), getProperties());
+    }
+
+    public static ChromeOptions getOptions() {
+        return options;
+    }
+
+    public static void setOptions(ChromeOptions options) {
+        Setup.options = options;
+    }
+
+    public static void setTimeouts(Map<String, Object> timeouts) {
+        Setup.timeouts = timeouts;
+    }
+
+    public static void setDriver(WebDriver driver) {
+        Setup.driver = driver;
     }
 
     public static Map<String, Object> getTimeouts() {
         return timeouts;
     }
 
-    public static Object executeScript(String script, Object... arg) {
-        return getJsExecutor().executeScript(script,arg);
-    }
-
     public static WebDriver getDriver() {
         return driver;
-    }
-
-    public static Actions getActions() {
-        return actions;
-    }
-
-    /**
-     *
-     * @param key
-     * @return
-     */
-    public static Object getValueStore(String key) {
-        return store.get(key);
     }
 
     /**
@@ -78,48 +122,47 @@ public final class Setup {
         return waitingObject;
     }
 
+    public static HashMap<String, Object> getStore() {
+        return store;
+    }
+
     /**
      *
-     * @param key
-     * @param value
+     * @param key Key for adding content to Store
+     * @param value Value for key on store
      */
     public static void setKeyValueStore(String key, Object value) {
-        store.put(key, value);
+        getStore().put(key, value);
     }
 
     /**
      * Open new url
      *
-     * @param url
+     * @param url Url to open using driver
      */
     public static void openUrl(String url) {
-        driver.get(url);
-    }
-
-    private static void loadDefaultProperties() {
-        InputStream input = Setup.class.getResourceAsStream("/defaultproperties.properties");
-
-        Properties pop = new Properties();
-        try {
-            pop.load(input);
-        } catch (java.io.IOException e) { }
-
-        setKeyValueStore("defaultProperties", pop);
-        System.setProperty("defaultURL", (String) pop.get("default.url"));
-        setKeyValueStore("default_url", System.getProperty("defaultURL"));
-    }
-
-    public static JavascriptExecutor getJsExecutor() {
-        return jsExecutor;
+        getDriver().get(url);
     }
 
     public static void setJsExecutor(JavascriptExecutor jsExecutor) {
         Setup.jsExecutor = jsExecutor;
     }
 
+    public static JavascriptExecutor getJsExecutor() {
+        return jsExecutor;
+    }
+
+    public static ConfigProperties getConfigProperties() {
+        return configProperties;
+    }
+
+    public static void setConfigProperties(ConfigProperties configProperties) {
+        Setup.configProperties = configProperties;
+    }
+
     @After
     public void close() {
-        getWait().thread(1500);
-        driver.close();
+        getWait().thread((Long) getConfigProperties().getProperties().get(Property.INT_SHORT_TIME));
+        getDriver().close();
     }
 }

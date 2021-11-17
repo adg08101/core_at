@@ -76,7 +76,8 @@ public class PageObject {
     }
 
     public void openURL() {
-        Setup.openUrl(System.getProperty("defaultURL"));
+        Setup.openUrl(Setup.getProperties().getProperty((String) Setup.getConfigProperties().getProperties().
+                get(Property.STRING_DEFAULT_URL)));
     }
 
     protected WebElement getWebElement(By by) {
