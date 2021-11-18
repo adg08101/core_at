@@ -24,10 +24,10 @@
 
 Feature: Default main Feature
   As a: User
-  I Want To: Go to Google Search Page
-  So That: I can Search for something
+  I Want To: Go to <App> Login Page
+  So That: I can Log into <App>
 
-  #Background:
+  Background:
   #  Given BackGround Conditions
 
   Scenario Outline: Main Default Scenario
@@ -38,6 +38,6 @@ Feature: Default main Feature
     #And Some more here
 
     Examples:
-      | view          | loginType      | userName       | userNameField                                               | password       | passwordField                                          | submitElements                                                                                                                        |
-      #| GoHeavy Login | USER_AND_PASS  | admin_username | //input[@id='email']                                        | admin_password | //input[@id='password']                                | //span[text()='Sign in']/ancestor::button                                                                                             |
+      | view          | loginType      | userName       | userNameField                                               | password       | passwordField                                     | submitElements                                                                                                                        |
+      | GoHeavy Login | USER_AND_PASS  | admin_username | //input[@id='email']                                        | admin_password | //input[@id='password']                           | //span[text()='Sign in']/ancestor::button                                                                                             |
       | Kahua Login   | USER_THEN_PASS | kahua_username | //p[text()='Email Address']/ancestor::div/descendant::input | kahua_password | //div[@role='textbox' and @aria-label='Password'] | //p[text()='Next']/ancestor::div/descendant::div[@role='button'], //p[text()='Sign in']/ancestor::div/descendant::div[@role='button'] |
