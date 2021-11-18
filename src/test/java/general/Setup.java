@@ -58,6 +58,7 @@ public final class Setup {
         setActions(new Actions(getDriver()));
         setJsExecutor((JavascriptExecutor) getDriver());
         loadDefaultProperties();
+        getJsExecutor().executeScript("console.log('System online.')");
     }
 
     private void loadDefaultProperties() {
@@ -158,13 +159,18 @@ public final class Setup {
         Setup.configProperties = configProperties;
     }
 
+    public static Object getPropertyFromKey(Property key) {
+        return getProperties().getProperty((String) Setup.getConfigProperties().getProperties().
+                get(key));
+    }
+
     public static void waitTime(int factor) {
         getWait().thread((Long) getConfigProperties().getProperties().get(Property.INT_SHORT_TIME) * factor);
     }
 
     @After
     public void close() {
-        waitTime(10);
+        waitTime(8);
         getDriver().close();
     }
 }

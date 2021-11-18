@@ -94,17 +94,10 @@ public class PageObject {
         return Setup.getDriver();
     }
 
-    public void openURL(String view) {
-        if (view.equals("GoHeavy Login")) {
-            setUrlPath(Setup.getProperties().getProperty((String) Setup.getConfigProperties().getProperties().
-                    get(Property.STRING_DEFAULT_URL)));
-            Setup.openUrl(getUrlPath());
-        }
-        else if (view.equals("Kahua Login")) {
-            setUrlPath(Setup.getProperties().getProperty((String) Setup.getConfigProperties().getProperties().
-                    get(Property.KAHUA_URL)));
-            Setup.openUrl(getUrlPath());
-        }
+    public void openURL(String app) {
+        setUrlPath((String) Setup.getPropertyFromKey(Property.valueOf(app + "_URL")));
+        Setup.openUrl(getUrlPath());
+
         print(getUrlPath());
         print(getFaker().number().randomNumber());
     }
