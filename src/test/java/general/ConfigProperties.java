@@ -24,6 +24,9 @@ public class ConfigProperties {
         getProperties().put(Property.DEFAULT_PROPERTIES_FILE_PATH, "/defaultProperties.properties");
         getProperties().put(Property.STRING_DEFAULT_URL, "default_url");
         getProperties().put(Property.STRING_DEFAULT_PROPERTIES, "defaultProperties");
+        getProperties().put(Property.STRING_USER_NAME, "user_name");
+        getProperties().put(Property.STRING_USER_PASSWORD, "user_password");
+        getProperties().put(Property.KAHUA_URL, "kahua_url");
     }
 
     public HashMap<Object, Object> getProperties() {

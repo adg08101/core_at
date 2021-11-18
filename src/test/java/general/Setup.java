@@ -6,6 +6,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,32 +17,13 @@ public final class Setup {
     private static WebDriver driver;
     private static HashMap<String, Object> store;
     private static ChromeOptions options;
+    private static Actions actions;
     private static ConfigProperties configProperties;
     private static WaitingObject waitingObject;
     private static JavascriptExecutor jsExecutor;
     private static Map<String, Object> timeouts;
     private static InputStream input;
     private static Properties properties;
-
-    public static void setStore(HashMap<String, Object> store) {
-        Setup.store = store;
-    }
-
-    public static InputStream getInput() {
-        return input;
-    }
-
-    public static void setInput(InputStream input) {
-        Setup.input = input;
-    }
-
-    public static Properties getProperties() {
-        return properties;
-    }
-
-    public static void setProperties(Properties properties) {
-        Setup.properties = properties;
-    }
 
     @Before
     public void InitSetup() {
@@ -72,6 +55,7 @@ public final class Setup {
     private void initObject() {
         waitingObject = new WaitingObject(getDriver());
         setStore(new HashMap<>());
+        setActions(new Actions(getDriver()));
         setJsExecutor((JavascriptExecutor) getDriver());
         loadDefaultProperties();
     }
@@ -88,6 +72,34 @@ public final class Setup {
 
         setKeyValueStore((String) getConfigProperties().getProperties().get(
                 Property.STRING_DEFAULT_PROPERTIES), getProperties());
+    }
+
+    public static Actions getActions() {
+        return actions;
+    }
+
+    public static void setActions(Actions actions) {
+        Setup.actions = actions;
+    }
+
+    public static void setStore(HashMap<String, Object> store) {
+        Setup.store = store;
+    }
+
+    public static InputStream getInput() {
+        return input;
+    }
+
+    public static void setInput(InputStream input) {
+        Setup.input = input;
+    }
+
+    public static Properties getProperties() {
+        return properties;
+    }
+
+    public static void setProperties(Properties properties) {
+        Setup.properties = properties;
     }
 
     public static ChromeOptions getOptions() {
@@ -114,10 +126,6 @@ public final class Setup {
         return driver;
     }
 
-    /**
-     *
-     * @return Return an instance of wait.
-     */
     public static WaitingObject getWait() {
         return waitingObject;
     }
@@ -126,20 +134,10 @@ public final class Setup {
         return store;
     }
 
-    /**
-     *
-     * @param key Key for adding content to Store
-     * @param value Value for key on store
-     */
     public static void setKeyValueStore(String key, Object value) {
         getStore().put(key, value);
     }
 
-    /**
-     * Open new url
-     *
-     * @param url Url to open using driver
-     */
     public static void openUrl(String url) {
         getDriver().get(url);
     }
