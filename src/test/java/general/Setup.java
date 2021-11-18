@@ -158,9 +158,13 @@ public final class Setup {
         Setup.configProperties = configProperties;
     }
 
+    public static void waitTime(int factor) {
+        getWait().thread((Long) getConfigProperties().getProperties().get(Property.INT_SHORT_TIME) * factor);
+    }
+
     @After
     public void close() {
-        getWait().thread((Long) getConfigProperties().getProperties().get(Property.INT_SHORT_TIME));
+        waitTime(10);
         getDriver().close();
     }
 }

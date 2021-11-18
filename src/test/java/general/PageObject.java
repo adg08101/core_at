@@ -76,11 +76,6 @@ public class PageObject {
             getWait().until(ExpectedConditions.presenceOfElementLocated(elementLocator));
             setElement(getWebElement(elementLocator));
 
-            if (getUser_name().equals(key) && getView().equals("Kahua Login")) {
-                setX_pos(getElement().getLocation().getX());
-                setY_pos(getElement().getLocation().getY());
-            }
-
             Setup.getActions().moveToElement(getElement()).build().perform();
 
             if (key instanceof Keys)
@@ -90,7 +85,10 @@ public class PageObject {
                 Setup.getActions().sendKeys(getElement(), (String) key).build().perform();
             }
         } catch (Exception e) {
-            getElement().sendKeys(getUser_password());
+            try {
+                Setup.getActions().sendKeys(getUser_password()).build().perform();
+                Setup.getActions().sendKeys(Keys.RETURN).build().perform();
+            } catch (Exception i) { }
         }
     }
 
