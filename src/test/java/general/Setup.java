@@ -165,7 +165,8 @@ public final class Setup {
     }
 
     public static void waitTime(int factor) {
-        getWait().thread((Long) getConfigProperties().getProperties().get(Property.INT_SHORT_TIME) * factor);
+        getWait().thread((Long) getConfigProperties().getProperties().get(
+                Property.INT_SHORT_TIME) * factor);
     }
 
     @After
