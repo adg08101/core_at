@@ -25,46 +25,70 @@ public class PageObject {
         setWait(new WebDriverWait(this.getDriver(), getWaitTime()));
     }
 
-    public void login(LoginType loginType, String username, String password,
+    public boolean login(LoginType loginType, String username, String password,
                       By usernameLocator, By passwordLocator, String[] submitElements) {
+        try {
+            System.setProperty((String) Setup.getConfigProperties().getProperties().get(Property.
+                    STRING_USER_NAME), Setup.getProperties().getProperty(username) == null ?
+                    username : Setup.getProperties().getProperty(username));
 
-        System.setProperty((String) Setup.getConfigProperties().getProperties().get(Property.
-                STRING_USER_NAME), Setup.getProperties().getProperty(username) == null ?
-                username : Setup.getProperties().getProperty(username));
+            System.setProperty((String) Setup.getConfigProperties().getProperties().get(Property.
+                    STRING_USER_PASSWORD), Setup.getProperties().getProperty(password) == null ?
+                    password : Setup.getProperties().getProperty(password));
 
-        System.setProperty((String) Setup.getConfigProperties().getProperties().get(Property.
-                STRING_USER_PASSWORD), Setup.getProperties().getProperty(password) == null ?
-                password : Setup.getProperties().getProperty(password));
+            setUser_name(System.getProperties().getProperty((String) Setup.getConfigProperties().getProperties().
+                    get(Property.STRING_USER_NAME)));
 
-        setUser_name(System.getProperties().getProperty((String) Setup.getConfigProperties().getProperties().
-                get(Property.STRING_USER_NAME)));
+            setUser_password(System.getProperties().getProperty((String) Setup.getConfigProperties().
+                    getProperties().get(Property.STRING_USER_PASSWORD)));
 
-        setUser_password(System.getProperties().getProperty((String) Setup.getConfigProperties().
-                getProperties().get(Property.STRING_USER_PASSWORD)));
-
-        switch (loginType) {
-            case USER_AND_PASS:
-                sendKeysToInput(getUser_name(), usernameLocator);
-                sendKeysToInput(getUser_password(), passwordLocator);
-                sendKeysToInput(Keys.RETURN, By.xpath(submitElements[0]));
-                break;
-            case USER_THEN_PASS:
-                sendKeysToInput(getUser_name(), usernameLocator);
-                sendKeysToInput(Keys.RETURN, By.xpath(submitElements[0]));
-                sendKeysToInput(getUser_password(), passwordLocator);
-                sendKeysToInput(Keys.RETURN, By.xpath(submitElements[1]));
-                break;
-            case PASS_ONLY:
-                //Todo Pass only code
-                break;
+            switch (loginType) {
+                case USER_AND_PASS:
+                    sendKeysToInput(getUser_name(), usernameLocator);
+                    sendKeysToInput(getUser_password(), passwordLocator);
+                    sendKeysToInput(Keys.RETURN, By.xpath(submitElements[0]));
+                    break;
+                case USER_THEN_PASS:
+                    sendKeysToInput(getUser_name(), usernameLocator);
+                    sendKeysToInput(Keys.RETURN, By.xpath(submitElements[0]));
+                    sendKeysToInput(getUser_password(), passwordLocator);
+                    sendKeysToInput(Keys.RETURN, By.xpath(submitElements[1]));
+                    break;
+                case PASS_ONLY:
+                    //Todo Pass only code
+                    break;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
+    }
+
+    public boolean logoff(String[] logoffItems) {
+        try {
+            for (String element : logoffItems)
+                clickOnItem(By.xpath(element));
+            return true;
+        } catch (Exception e) {
+            print(e.getMessage());
+            return false;
+        }
+    }
+
+    public void waitForElementAndSet(By elementLocator) {
+        getWait().until(ExpectedConditions.presenceOfElementLocated(elementLocator));
+        setElement(getWebElement(elementLocator));
+    }
+
+    public void clickOnItem(By elementLocator) {
+        waitForElementAndSet(elementLocator);
+        Setup.getActions().click(getElement()).build().perform();
     }
 
     public void sendKeysToInput(Object key, By elementLocator) {
         try {
-            getWait().until(ExpectedConditions.presenceOfElementLocated(elementLocator));
-            setElement(getWebElement(elementLocator));
-
+            waitForElementAndSet(elementLocator);
             Setup.getActions().moveToElement(getElement()).build().perform();
 
             if (key instanceof Keys)

@@ -33,11 +33,11 @@ Feature: Default main Feature
   Scenario Outline: Main Default Scenario
     Given The user is in "<view>" view
     Then The user LogsIn with "<userName>" and "<password>"
+    Then The user LogsOff
     #Then Some more here
     #When Some more here
     #And Some more here
 
     Examples:
       | view          | userName       | password       |
-      | GoHeavy Login | admin_username | admin_password |
       | Kahua Login   | kahua_username | kahua_password |

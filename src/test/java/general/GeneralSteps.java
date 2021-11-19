@@ -2,6 +2,7 @@ package general;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.util.Locale;
@@ -14,9 +15,11 @@ public class GeneralSteps extends PageObject {
     private LoginType loginType;
     private String userNameField;
     private String passwordField;
-    private String tempSubmitItems;
-    private String[] submitItems;
+    private String tempLoginItems;
+    private String[] loginItems;
     private String appPrefix;
+    private String tempLogoffItems;
+    private String[] logoffItems;
 
     public GeneralSteps() {
         super();
@@ -24,34 +27,49 @@ public class GeneralSteps extends PageObject {
 
     @Given("The user is in {string} view")
     public void the_user_is_in_view(String view) {
-        setView(view);
-        setAppPrefix(getView().substring(0, getView().indexOf(" ")).toUpperCase(Locale.ROOT));
-
         try {
+            setView(view);
+            setAppPrefix(getView().substring(0, getView().indexOf(" ")).
+                    toUpperCase(Locale.ROOT));
+
             openURL(getAppPrefix());
         } catch (Exception e) { print(e.getMessage()); }
     }
 
     @Then("The user LogsIn with {string} and {string}")
     public void the_user_logsin_with_username_and_password(String str0, String str1) {
-        //TODO load config properties here
-        //TODO Everything changes from here on
+        try {
+            setUserName(str0);
+            setPassword(str1);
 
-        setUserName(str0);
-        setPassword(str1);
+            setLoginType(LoginType.valueOf((String) Setup.getPropertyFromKey(Property.valueOf(
+                    getAppPrefix() + "_LOGIN_TYPE"))));
+            setUserNameField((String) Setup.getPropertyFromKey(Property.valueOf(
+                    getAppPrefix() + "_USERNAME_FIELD")));
+            setPasswordField((String) Setup.getPropertyFromKey(Property.valueOf(
+                    getAppPrefix() + "_PASSWORD_FIELD")));
+            setTempLoginItems((String)Setup.getPropertyFromKey(Property.valueOf(
+                    getAppPrefix() + "_LOGIN_ELEMENTS")));
+            setLoginItems(getTempLoginItems().split(","));
 
-        setLoginType(LoginType.valueOf((String) Setup.getPropertyFromKey(Property.valueOf(
-                getAppPrefix() + "_LOGIN_TYPE"))));
-        setUserNameField((String) Setup.getPropertyFromKey(Property.valueOf(
-                getAppPrefix() + "_USERNAME_FIELD")));
-        setPasswordField((String) Setup.getPropertyFromKey(Property.valueOf(
-                getAppPrefix() + "_PASSWORD_FIELD")));
-        setTempSubmitItems((String)Setup.getPropertyFromKey(Property.valueOf(
-                getAppPrefix() + "_SUBMIT_ELEMENTS")));
-        setSubmitItems(getTempSubmitItems().split(","));
+            Assert.assertTrue(login(getLoginType(), getUserName(), getPassword(),
+                    By.xpath(getUserNameField()), By.xpath(getPasswordField()), getLoginItems()));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
 
-        login(getLoginType(), getUserName(), getPassword(), By.xpath(getUserNameField()), By.xpath(getPasswordField()),
-                getSubmitItems());
+    @Then("The user LogsOff")
+    public void the_user_logsoff() {
+        try {
+            setTempLogoffItems((String)Setup.getPropertyFromKey(Property.valueOf(
+                    getAppPrefix() + "_LOGOFF_ELEMENTS")));
+            setLogoffItems(getTempLogoffItems().split(","));
+
+            Assert.assertTrue(logoff(getLogoffItems()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getView() {
@@ -102,20 +120,20 @@ public class GeneralSteps extends PageObject {
         this.passwordField = passwordField;
     }
 
-    public String[] getSubmitItems() {
-        return submitItems;
+    public String[] getLoginItems() {
+        return loginItems;
     }
 
-    public void setSubmitItems(String[] submitItems) {
-        this.submitItems = submitItems;
+    public void setLoginItems(String[] loginItems) {
+        this.loginItems = loginItems;
     }
 
-    public String getTempSubmitItems() {
-        return tempSubmitItems;
+    public String getTempLoginItems() {
+        return tempLoginItems;
     }
 
-    public void setTempSubmitItems(String tempSubmitItems) {
-        this.tempSubmitItems = tempSubmitItems;
+    public void setTempLoginItems(String tempLoginItems) {
+        this.tempLoginItems = tempLoginItems;
     }
 
     public String getAppPrefix() {
@@ -124,5 +142,21 @@ public class GeneralSteps extends PageObject {
 
     public void setAppPrefix(String appPrefix) {
         this.appPrefix = appPrefix;
+    }
+
+    public String getTempLogoffItems() {
+        return tempLogoffItems;
+    }
+
+    public void setTempLogoffItems(String tempLogoffItems) {
+        this.tempLogoffItems = tempLogoffItems;
+    }
+
+    public String[] getLogoffItems() {
+        return logoffItems;
+    }
+
+    public void setLogoffItems(String[] logoffItems) {
+        this.logoffItems = logoffItems;
     }
 }
