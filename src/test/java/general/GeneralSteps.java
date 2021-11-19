@@ -43,13 +43,13 @@ public class GeneralSteps extends PageObject {
             setPassword(str1);
 
             setLoginType(LoginType.valueOf((String) Setup.getPropertyFromKey(Property.valueOf(
-                    getAppPrefix() + "_LOGIN_TYPE"))));
+                    getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_LOGIN_TYPE)))));
             setUserNameField((String) Setup.getPropertyFromKey(Property.valueOf(
-                    getAppPrefix() + "_USERNAME_FIELD")));
+                    getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_USERNAME_FIELD))));
             setPasswordField((String) Setup.getPropertyFromKey(Property.valueOf(
-                    getAppPrefix() + "_PASSWORD_FIELD")));
+                    getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_PASSWORD_FIELD))));
             setTempLoginItems((String)Setup.getPropertyFromKey(Property.valueOf(
-                    getAppPrefix() + "_LOGIN_ELEMENTS")));
+                    getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_LOGIN_ELEMENTS))));
             setLoginItems(getTempLoginItems().split(","));
 
             Assert.assertTrue(login(getLoginType(), getUserName(), getPassword(),
@@ -63,7 +63,7 @@ public class GeneralSteps extends PageObject {
     public void the_user_logsoff() {
         try {
             setTempLogoffItems((String)Setup.getPropertyFromKey(Property.valueOf(
-                    getAppPrefix() + "_LOGOFF_ELEMENTS")));
+                    getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_LOGOFF_ELEMENTS))));
             setLogoffItems(getTempLogoffItems().split(","));
 
             Assert.assertTrue(logoff(getLogoffItems()));

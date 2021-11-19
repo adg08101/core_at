@@ -31,6 +31,11 @@ public class ConfigProperties {
         getProperties().put(Property.KAHUA_PASSWORD_FIELD, "kahua_password_field");
         getProperties().put(Property.KAHUA_LOGIN_ELEMENTS, "kahua_login_elements");
         getProperties().put(Property.KAHUA_LOGOFF_ELEMENTS, "kahua_logoff_elements");
+        getProperties().put(Property.STR_LOGIN_TYPE, "_LOGIN_TYPE");
+        getProperties().put(Property.STR_USERNAME_FIELD, "_USERNAME_FIELD");
+        getProperties().put(Property.STR_PASSWORD_FIELD, "_PASSWORD_FIELD");
+        getProperties().put(Property.STR_LOGIN_ELEMENTS, "_LOGIN_ELEMENTS");
+        getProperties().put(Property.STR_LOGOFF_ELEMENTS, "_LOGOFF_ELEMENTS");
     }
 
     public HashMap<Object, Object> getProperties() {
