@@ -33,6 +33,7 @@ Feature: Default main Feature
   Scenario Outline: Main Default Scenario
     Given The user is in "<view>" view
     Then The user LogsIn with "<userName>" and "<password>"
+    Then The system saves user and project values
     Then The user LogsOff
     #Then Some more here
     #When Some more here

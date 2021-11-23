@@ -8,7 +8,6 @@ import org.openqa.selenium.By;
 import java.util.Locale;
 
 public class GeneralSteps extends PageObject {
-
     private String view;
     private String userName;
     private String password;

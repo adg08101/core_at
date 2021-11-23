@@ -9,6 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class PageObject {
     private String urlPath;
     private WebDriverWait wait;
@@ -17,6 +19,7 @@ public class PageObject {
     private String user_name;
     private String user_password;
     private WebElement element;
+    private List<WebElement> elements;
 
     public PageObject() {
         setFaker(new Faker());
@@ -81,6 +84,11 @@ public class PageObject {
         setElement(getWebElement(elementLocator));
     }
 
+    public void waitForElementsAndSet(By elementLocator) {
+        getWait().until(ExpectedConditions.presenceOfElementLocated(elementLocator));
+        setElements(getWebElements(elementLocator));
+    }
+
     public void clickOnItem(By elementLocator) {
         waitForElementAndSet(elementLocator);
         Setup.getActions().click(getElement()).build().perform();
@@ -128,6 +136,10 @@ public class PageObject {
 
     public WebElement getWebElement(By by) {
         return this.getDriver().findElement(by);
+    }
+
+    public List<WebElement> getWebElements(By by) {
+        return this.getDriver().findElements(by);
     }
 
     public WebDriverWait getWait() {
@@ -180,5 +192,13 @@ public class PageObject {
 
     public void setUrlPath(String urlPath) {
         this.urlPath = urlPath;
+    }
+
+    public List<WebElement> getElements() {
+        return elements;
+    }
+
+    public void setElements(List<WebElement> elements) {
+        this.elements = elements;
     }
 }
