@@ -21,7 +21,7 @@ public class PageObject {
     public PageObject() {
         setFaker(new Faker());
         PageFactory.initElements(this.getDriver(), this);
-        setWaitTime((Integer) Setup.getConfigProperties().getProperties().get(Property.TIMEOUT_PAGELOAD_VALUE));
+        setWaitTime((Integer) Setup.getConfigProperties().getProperties().get(Property.TIMEOUT_IMPLICIT_VALUE));
         setWait(new WebDriverWait(this.getDriver(), getWaitTime()));
     }
 

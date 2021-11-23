@@ -50,7 +50,8 @@ public class GeneralSteps extends PageObject {
                     getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_PASSWORD_FIELD))));
             setTempLoginItems((String)Setup.getPropertyFromKey(Property.valueOf(
                     getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_LOGIN_ELEMENTS))));
-            setLoginItems(getTempLoginItems().split(","));
+            setLoginItems(getTempLoginItems().split((String) Setup.getConfigProperties().getProperties().get(
+                    Property.CHAR_COMMA)));
 
             Assert.assertTrue(login(getLoginType(), getUserName(), getPassword(),
                     By.xpath(getUserNameField()), By.xpath(getPasswordField()), getLoginItems()));
@@ -64,7 +65,8 @@ public class GeneralSteps extends PageObject {
         try {
             setTempLogoffItems((String)Setup.getPropertyFromKey(Property.valueOf(
                     getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_LOGOFF_ELEMENTS))));
-            setLogoffItems(getTempLogoffItems().split(","));
+            setLogoffItems(getTempLogoffItems().split((String) Setup.getConfigProperties().getProperties().get(
+                    Property.CHAR_COMMA)));
 
             Assert.assertTrue(logoff(getLogoffItems()));
         } catch (Exception e) {
