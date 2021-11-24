@@ -37,6 +37,8 @@ public class ConfigProperties {
         getProperties().put(Property.STR_LOGIN_ELEMENTS, "_LOGIN_ELEMENTS");
         getProperties().put(Property.STR_LOGOFF_ELEMENTS, "_LOGOFF_ELEMENTS");
         getProperties().put(Property.CHAR_COMMA, ",");
+        getProperties().put(Property.INT_ZERO, 0);
+        getProperties().put(Property.CHAR_SPACE, " ");
     }
 
     public HashMap<Object, Object> getProperties() {

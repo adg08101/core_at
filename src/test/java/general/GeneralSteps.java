@@ -28,8 +28,9 @@ public class GeneralSteps extends PageObject {
     public void the_user_is_in_view(String view) {
         try {
             setView(view);
-            setAppPrefix(getView().substring(0, getView().indexOf(" ")).
-                    toUpperCase(Locale.ROOT));
+            setAppPrefix(getView().substring((Integer) Setup.getConfigProperties().getProperties().get(
+                    Property.INT_ZERO), getView().indexOf((String) Setup.getConfigProperties().getProperties().get(
+                    Property.CHAR_SPACE))).toUpperCase(Locale.ROOT));
 
             openURL(getAppPrefix());
         } catch (Exception e) { print(e.getMessage()); }

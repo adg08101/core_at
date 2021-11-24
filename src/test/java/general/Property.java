@@ -29,5 +29,7 @@ public enum Property {
     STR_PASSWORD_FIELD,
     STR_LOGIN_ELEMENTS,
     STR_LOGOFF_ELEMENTS,
-    CHAR_COMMA
+    CHAR_COMMA,
+    INT_ZERO,
+    CHAR_SPACE
 }
