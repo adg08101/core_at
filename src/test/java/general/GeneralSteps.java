@@ -1,5 +1,6 @@
 package general;
 
+import core.kahua.login.LoginStep;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
@@ -8,7 +9,6 @@ import org.openqa.selenium.By;
 import java.util.Locale;
 
 public class GeneralSteps extends PageObject {
-    private String view;
     private String userName;
     private String password;
     private LoginType loginType;
@@ -16,7 +16,6 @@ public class GeneralSteps extends PageObject {
     private String passwordField;
     private String tempLoginItems;
     private String[] loginItems;
-    private String appPrefix;
     private String tempLogoffItems;
     private String[] logoffItems;
 
@@ -26,14 +25,10 @@ public class GeneralSteps extends PageObject {
 
     @Given("The user is in {string} view")
     public void the_user_is_in_view(String view) {
-        try {
-            setView(view);
-            setAppPrefix(getView().substring((Integer) Setup.getConfigProperties().getProperties().get(
-                    Property.INT_ZERO), getView().indexOf((String) Setup.getConfigProperties().getProperties().get(
-                    Property.CHAR_SPACE))).toUpperCase(Locale.ROOT));
-
-            openURL(getAppPrefix());
-        } catch (Exception e) { print(e.getMessage()); }
+        if (view.toLowerCase(Locale.ROOT).contains("login")) {
+            LoginStep loginStep = new LoginStep();
+            loginStep.the_user_is_in_login_view(view);
+        }
     }
 
     @Then("The user LogsIn with {string} and {string}")
@@ -72,14 +67,6 @@ public class GeneralSteps extends PageObject {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public String getView() {
-        return view;
-    }
-
-    public void setView(String view) {
-        this.view = view;
     }
 
     public String getUserName() {
@@ -136,14 +123,6 @@ public class GeneralSteps extends PageObject {
 
     public void setTempLoginItems(String tempLoginItems) {
         this.tempLoginItems = tempLoginItems;
-    }
-
-    public String getAppPrefix() {
-        return appPrefix;
-    }
-
-    public void setAppPrefix(String appPrefix) {
-        this.appPrefix = appPrefix;
     }
 
     public String getTempLogoffItems() {

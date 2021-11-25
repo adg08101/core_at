@@ -20,6 +20,7 @@ public class PageObject {
     private String user_password;
     private WebElement element;
     private List<WebElement> elements;
+    private String view;
 
     public PageObject() {
         setFaker(new Faker());
@@ -112,6 +113,24 @@ public class PageObject {
                 print(e.getMessage());
             } catch (Exception i) { print(i.getMessage()); }
         }
+    }
+
+    public String getView() {
+        return view;
+    }
+
+    public void setView(String view) {
+        this.view = view;
+    }
+
+    public String getAppPrefix() {
+        return System.getProperties().getProperty((String) Setup.getConfigProperties().getProperties().
+                get(Property.STR_APP_PREFIX));
+    }
+
+    public void setAppPrefix(String appPrefix) {
+        System.setProperty((String) Setup.getConfigProperties().getProperties().get(Property.
+                STR_APP_PREFIX), appPrefix);
     }
 
     public void print(Object string) {

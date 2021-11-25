@@ -31,5 +31,6 @@ public enum Property {
     STR_LOGOFF_ELEMENTS,
     CHAR_COMMA,
     INT_ZERO,
-    CHAR_SPACE
+    CHAR_SPACE,
+    STR_APP_PREFIX
 }

@@ -3,7 +3,7 @@ package core.kahua.dashboard;
 import io.cucumber.java.en.Then;
 
 public class DashboardStepDefinition {
-    private DashboardStep dashboardStep;
+    private final DashboardStep dashboardStep;
 
     public DashboardStepDefinition()  {
         dashboardStep = new DashboardStep();

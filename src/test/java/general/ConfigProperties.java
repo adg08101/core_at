@@ -39,6 +39,7 @@ public class ConfigProperties {
         getProperties().put(Property.CHAR_COMMA, ",");
         getProperties().put(Property.INT_ZERO, 0);
         getProperties().put(Property.CHAR_SPACE, " ");
+        getProperties().put(Property.STR_APP_PREFIX, "app_prefix");
     }
 
     public HashMap<Object, Object> getProperties() {
