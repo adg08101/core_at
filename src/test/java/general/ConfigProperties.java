@@ -25,12 +25,12 @@ public class ConfigProperties {
         getProperties().put(Property.STRING_DEFAULT_PROPERTIES, "defaultProperties");
         getProperties().put(Property.STRING_USER_NAME, "user_name");
         getProperties().put(Property.STRING_USER_PASSWORD, "user_password");
-        getProperties().put(Property.KAHUA_URL, "kahua_url");
-        getProperties().put(Property.KAHUA_LOGIN_TYPE, "kahua_login_type");
-        getProperties().put(Property.KAHUA_USERNAME_FIELD, "kahua_username_field");
-        getProperties().put(Property.KAHUA_PASSWORD_FIELD, "kahua_password_field");
-        getProperties().put(Property.KAHUA_LOGIN_ELEMENTS, "kahua_login_elements");
-        getProperties().put(Property.KAHUA_LOGOFF_ELEMENTS, "kahua_logoff_elements");
+        getProperties().put(Property.GOHEAVY_URL, "goheavy_url");
+        getProperties().put(Property.GOHEAVY_LOGIN_TYPE, "goheavy_login_type");
+        getProperties().put(Property.GOHEAVY_USERNAME_FIELD, "goheavy_username_field");
+        getProperties().put(Property.GOHEAVY_PASSWORD_FIELD, "goheavy_password_field");
+        getProperties().put(Property.GOHEAVY_LOGIN_ELEMENTS, "goheavy_login_elements");
+        getProperties().put(Property.GOHEAVY_LOGOFF_ELEMENTS, "goheavy_logoff_elements");
         getProperties().put(Property.STR_LOGIN_TYPE, "_LOGIN_TYPE");
         getProperties().put(Property.STR_USERNAME_FIELD, "_USERNAME_FIELD");
         getProperties().put(Property.STR_PASSWORD_FIELD, "_PASSWORD_FIELD");

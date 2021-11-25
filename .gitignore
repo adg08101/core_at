@@ -24,3 +24,4 @@ hs_err_pid*
 src/test/resources/defaultProperties.properties
 .idea
 .gradle
+target/test-classes/defaultproperties.properties

@@ -1,6 +1,6 @@
 package general;
 
-import core.kahua.login.LoginStep;
+import core.goheavy.login.LoginStep;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
