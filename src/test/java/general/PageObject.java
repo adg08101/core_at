@@ -21,52 +21,15 @@ public class PageObject {
     private WebElement element;
     private List<WebElement> elements;
     private String view;
+    private String userName;
+    private String password;
+    private LoginType loginType;
 
     public PageObject() {
         setFaker(new Faker());
         PageFactory.initElements(this.getDriver(), this);
         setWaitTime((Integer) Setup.getConfigProperties().getProperties().get(Property.TIMEOUT_IMPLICIT_VALUE));
         setWait(new WebDriverWait(this.getDriver(), getWaitTime()));
-    }
-
-    public boolean login(LoginType loginType, String username, String password,
-                      By usernameLocator, By passwordLocator, String[] submitElements) {
-        try {
-            System.setProperty((String) Setup.getConfigProperties().getProperties().get(Property.
-                    STRING_USER_NAME), Setup.getProperties().getProperty(username) == null ?
-                    username : Setup.getProperties().getProperty(username));
-
-            System.setProperty((String) Setup.getConfigProperties().getProperties().get(Property.
-                    STRING_USER_PASSWORD), Setup.getProperties().getProperty(password) == null ?
-                    password : Setup.getProperties().getProperty(password));
-
-            setUser_name(System.getProperties().getProperty((String) Setup.getConfigProperties().getProperties().
-                    get(Property.STRING_USER_NAME)));
-
-            setUser_password(System.getProperties().getProperty((String) Setup.getConfigProperties().
-                    getProperties().get(Property.STRING_USER_PASSWORD)));
-
-            switch (loginType) {
-                case USER_AND_PASS:
-                    sendKeysToInput(getUser_name(), usernameLocator);
-                    sendKeysToInput(getUser_password(), passwordLocator);
-                    sendKeysToInput(Keys.RETURN, By.xpath(submitElements[0]));
-                    break;
-                case USER_THEN_PASS:
-                    sendKeysToInput(getUser_name(), usernameLocator);
-                    sendKeysToInput(Keys.RETURN, By.xpath(submitElements[0]));
-                    sendKeysToInput(getUser_password(), passwordLocator);
-                    sendKeysToInput(Keys.RETURN, By.xpath(submitElements[1]));
-                    break;
-                case PASS_ONLY:
-                    //Todo Pass only code
-                    break;
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     public boolean logoff(String[] logoffItems) {
@@ -121,6 +84,30 @@ public class PageObject {
 
     public void setView(String view) {
         this.view = view;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public LoginType getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(LoginType loginType) {
+        this.loginType = loginType;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getAppPrefix() {

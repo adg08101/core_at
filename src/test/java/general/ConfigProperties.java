@@ -38,6 +38,7 @@ public class ConfigProperties {
         getProperties().put(Property.STR_LOGOFF_ELEMENTS, "_LOGOFF_ELEMENTS");
         getProperties().put(Property.CHAR_COMMA, ",");
         getProperties().put(Property.INT_ZERO, 0);
+        getProperties().put(Property.INT_ONE, 1);
         getProperties().put(Property.CHAR_SPACE, " ");
         getProperties().put(Property.STR_APP_PREFIX, "app_prefix");
     }

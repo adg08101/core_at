@@ -4,18 +4,10 @@ import core.kahua.login.LoginStep;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 
 import java.util.Locale;
 
 public class GeneralSteps extends PageObject {
-    private String userName;
-    private String password;
-    private LoginType loginType;
-    private String userNameField;
-    private String passwordField;
-    private String tempLoginItems;
-    private String[] loginItems;
     private String tempLogoffItems;
     private String[] logoffItems;
 
@@ -31,30 +23,6 @@ public class GeneralSteps extends PageObject {
         }
     }
 
-    @Then("The user LogsIn with {string} and {string}")
-    public void the_user_logsin_with_username_and_password(String str0, String str1) {
-        try {
-            setUserName(str0);
-            setPassword(str1);
-
-            setLoginType(LoginType.valueOf((String) Setup.getPropertyFromKey(Property.valueOf(
-                    getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_LOGIN_TYPE)))));
-            setUserNameField((String) Setup.getPropertyFromKey(Property.valueOf(
-                    getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_USERNAME_FIELD))));
-            setPasswordField((String) Setup.getPropertyFromKey(Property.valueOf(
-                    getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_PASSWORD_FIELD))));
-            setTempLoginItems((String)Setup.getPropertyFromKey(Property.valueOf(
-                    getAppPrefix() + Setup.getConfigProperties().getProperties().get(Property.STR_LOGIN_ELEMENTS))));
-            setLoginItems(getTempLoginItems().split((String) Setup.getConfigProperties().getProperties().get(
-                    Property.CHAR_COMMA)));
-
-            Assert.assertTrue(login(getLoginType(), getUserName(), getPassword(),
-                    By.xpath(getUserNameField()), By.xpath(getPasswordField()), getLoginItems()));
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Then("The user LogsOff")
     public void the_user_logsoff() {
         try {
@@ -67,62 +35,6 @@ public class GeneralSteps extends PageObject {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public LoginType getLoginType() {
-        return loginType;
-    }
-
-    public void setLoginType(LoginType loginType) {
-        this.loginType = loginType;
-    }
-
-    public String getUserNameField() {
-        return userNameField;
-    }
-
-    public void setUserNameField(String userNameField) {
-        this.userNameField = userNameField;
-    }
-
-    public String getPasswordField() {
-        return passwordField;
-    }
-
-    public void setPasswordField(String passwordField) {
-        this.passwordField = passwordField;
-    }
-
-    public String[] getLoginItems() {
-        return loginItems;
-    }
-
-    public void setLoginItems(String[] loginItems) {
-        this.loginItems = loginItems;
-    }
-
-    public String getTempLoginItems() {
-        return tempLoginItems;
-    }
-
-    public void setTempLoginItems(String tempLoginItems) {
-        this.tempLoginItems = tempLoginItems;
     }
 
     public String getTempLogoffItems() {
