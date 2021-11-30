@@ -33,6 +33,7 @@ public class PageObject {
     }
 
     public boolean logoff(String[] logoffItems) {
+        Setup.waitTime(3);
         try {
             for (String element : logoffItems)
                 clickOnItem(By.xpath(element));
@@ -53,8 +54,13 @@ public class PageObject {
         setElements(getWebElements(elementLocator));
     }
 
+    public void waitForElementsToBeClickable(By elementLocator) {
+        getWait().until(ExpectedConditions.elementToBeClickable(elementLocator));
+    }
+
     public void clickOnItem(By elementLocator) {
         waitForElementAndSet(elementLocator);
+        waitForElementsToBeClickable(elementLocator);
         Setup.getActions().click(getElement()).build().perform();
     }
 
