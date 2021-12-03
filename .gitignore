@@ -25,3 +25,5 @@ src/test/resources/defaultProperties.properties
 .idea
 .gradle
 target/test-classes/defaultproperties.properties
+.vscode
+relative-path
