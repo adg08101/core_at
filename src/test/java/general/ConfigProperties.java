@@ -41,6 +41,7 @@ public class ConfigProperties {
         getProperties().put(Property.INT_ONE, 1);
         getProperties().put(Property.CHAR_SPACE, " ");
         getProperties().put(Property.STR_APP_PREFIX, "app_prefix");
+        getProperties().put(Property.KAHUA_URL, "kahua_url");
     }
 
     public HashMap<Object, Object> getProperties() {

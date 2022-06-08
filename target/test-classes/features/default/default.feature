@@ -40,5 +40,5 @@ Feature: Default main Feature
     #And Some more here
 
     Examples:
-      | view            | userName         | password         |
-      | Goheavy Login   | goheavy_username | goheavy_password |
+      | view          | userName       | password       |
+      | Kahua Login   | kahua_username | kahua_password |

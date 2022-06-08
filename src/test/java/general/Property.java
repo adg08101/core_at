@@ -33,5 +33,6 @@ public enum Property {
     INT_ZERO,
     INT_ONE,
     CHAR_SPACE,
-    STR_APP_PREFIX
+    STR_APP_PREFIX,
+    KAHUA_URL
 }
